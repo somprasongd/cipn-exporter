@@ -1,0 +1,7 @@
+# Folder
+/build/
+/dist/
+/export/
+
+# Env file
+/.env
