@@ -60,7 +60,7 @@ public class ConfigController {
     }
 
     private String getDatabaseUrl(Component parent, String defaultValue) {
-        return (String) JOptionPane.showInputDialog(parent, "Database URL",
+        return (String) JOptionPane.showInputDialog(parent, "Database URL\njdbc:postgresql://ip:port/dbname?user=username&password=pwd",
                 "กำหนดเชื่อมต่อฐานข้อมูลโรงพยาบาล", JOptionPane.OK_CANCEL_OPTION,
                 null, null, defaultValue);
     }

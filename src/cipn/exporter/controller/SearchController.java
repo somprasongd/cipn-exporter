@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,10 +28,13 @@ import java.util.logging.Logger;
  */
 public class SearchController {
 
-    private final String FILE_SEARCH = "search.sql";
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private static final Logger LOG = Logger.getLogger(SearchController.class.getName());
 
-    public List<TableComplexDataSource> handleSearch(String hn, String firstname, String lastname,
+    private final String FILE_SEARCH = "search.sql";
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+    public List<TableComplexDataSource> handleSearch(String hn, String an,
+            String firstname, String lastname,
             Date startDate, Date endDate) throws Exception {
         List<TableComplexDataSource> list = new ArrayList<>();
         try {
@@ -38,10 +42,12 @@ public class SearchController {
             Connection con = DBUtil.getInstance().getConnection();
             NamedParameterStatement p = new NamedParameterStatement(con, query);
             p.setString("hn", hn + "%");
+            p.setString("an", an + "%");
             p.setString("firstname", firstname + "%");
             p.setString("lastname", lastname + "%");
             p.setString("startDate", sdf.format(startDate));
             p.setString("endDate", sdf.format(endDate));
+            LOG.log(Level.SEVERE, p.getStatement().toString());
             try (ResultSet rs = p.executeQuery()) {
                 TableComplexDataSource dataSource;
                 while (rs.next()) {
@@ -49,6 +55,7 @@ public class SearchController {
                     dataSource.setId(rs.getString("t_visit_id"));
                     dataSource.setValues(new Object[]{
                         rs.getString("hn"),
+                        rs.getString("an"),
                         rs.getString("pname"),
                         rs.getString("invno"),
                         rs.getString("amount"),

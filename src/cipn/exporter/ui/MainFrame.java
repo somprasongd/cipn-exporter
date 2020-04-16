@@ -11,6 +11,7 @@ import cipn.exporter.controller.SearchController;
 import cipn.exporter.util.ConfigUtil;
 import cipn.exporter.util.DBUtil;
 import com.hosos.comp.table.obj.TableComplexDataSource;
+import com.hosos.comp.table.renderer.TableAligment;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -31,8 +32,21 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
 
-        table.initTable(new String[]{"HN", "ชื่อ-สกุล", "Invoice No.", "Amt.", "วันที่เข้ารับบริการ"
+        table.initTable(new String[]{"HN", "AN", "ชื่อ-สกุล", "Invoice No.", "Amt.", "วันที่เข้ารับบริการ"
         }, true, true, false);
+
+        table.setColumnMinWidth(2, 80);
+        table.setColumnMaxWidth(2, 80);
+        table.setColumnCellRenderer(2, TableAligment.setAligment(TableAligment.CENTER));
+        table.setColumnMinWidth(3, 80);
+        table.setColumnMaxWidth(3, 80);
+        table.setColumnCellRenderer(3, TableAligment.setAligment(TableAligment.CENTER));
+        table.setColumnMinWidth(5, 130);
+        table.setColumnMaxWidth(5, 130);
+        table.setColumnCellRenderer(5, TableAligment.setAligment(TableAligment.CENTER));
+        table.setColumnMinWidth(6, 80);
+        table.setColumnMaxWidth(6, 80);
+        table.setColumnCellRenderer(6, TableAligment.setAligment(TableAligment.RIGHT));
     }
 
     /**
@@ -53,6 +67,8 @@ public class MainFrame extends javax.swing.JFrame {
         txtHn = new javax.swing.JTextField();
         txtFirstname = new javax.swing.JTextField();
         txtLastname = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtAn = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -94,6 +110,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getStyle() | java.awt.Font.BOLD));
         jLabel2.setText("ชื่อ");
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel3.add(jLabel2, gridBagConstraints);
@@ -101,6 +119,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getStyle() | java.awt.Font.BOLD));
         jLabel3.setText("นามสกุล");
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel3.add(jLabel3, gridBagConstraints);
@@ -127,8 +147,8 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.3;
@@ -142,13 +162,35 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel3.add(txtLastname, gridBagConstraints);
+
+        jLabel6.setFont(jLabel6.getFont().deriveFont(jLabel6.getFont().getStyle() | java.awt.Font.BOLD));
+        jLabel6.setText("AN");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPanel3.add(jLabel6, gridBagConstraints);
+
+        txtAn.setFont(txtAn.getFont());
+        txtAn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAnActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.3;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPanel3.add(txtAn, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = 3;
@@ -260,6 +302,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("ข้อมูลเบิกจ่าย"));
         jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        table.setFont(table.getFont());
+        table.getTable().setRowHeight(25);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -331,6 +376,10 @@ public class MainFrame extends javax.swing.JFrame {
         this.handleClosingApp();
     }//GEN-LAST:event_formWindowClosing
 
+    private void txtAnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnActionPerformed
+        this.onClickedSearch();
+    }//GEN-LAST:event_txtAnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfig;
     private javax.swing.JButton btnExport;
@@ -342,6 +391,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -351,6 +401,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblCount;
     private javax.swing.JLabel lblStatus;
     private com.hosos.comp.table.TableComplex table;
+    private javax.swing.JTextField txtAn;
     private javax.swing.JTextField txtFirstname;
     private javax.swing.JTextField txtHn;
     private javax.swing.JTextField txtLastname;
@@ -362,22 +413,32 @@ public class MainFrame extends javax.swing.JFrame {
         }
         // parameters
         String hn = txtHn.getText().trim();
+        String an = txtAn.getText().trim();
         String firstname = txtFirstname.getText().trim();
         String lastname = txtLastname.getText().trim();
         Date startDate = dcStart.getDate();
         Date endDate = dcEnd.getDate();
 
         table.clearTable();
-        try {
-            List<TableComplexDataSource> ds = searchController.handleSearch(hn, firstname, lastname, startDate, endDate);
-            table.setComplexDatasource(ds);
-        } catch (Exception ex) {
-            if (ex.getMessage().equals("No HIS")) {
-                JOptionPane.showMessageDialog(this, "ไม่พบข้อมูลการตั้งค่าชื่อระบบ", "เตือน", JOptionPane.WARNING_MESSAGE);
-            } else if (ex.getMessage().equals("No database config.")) {
-                JOptionPane.showMessageDialog(this, "ไม่พบข้อมูลการตั้งค่าการเชื่อมต่อฐานข้อมูล", "เตือน", JOptionPane.WARNING_MESSAGE);
+        btnSearch.setEnabled(false);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<TableComplexDataSource> ds = searchController.handleSearch(hn, an, firstname, lastname, startDate, endDate);
+                    table.setComplexDatasource(ds);
+                    btnSearch.setEnabled(true);
+                } catch (Exception ex) {
+                    if (ex.getMessage().equals("No HIS")) {
+                        JOptionPane.showMessageDialog(null, "ไม่พบข้อมูลการตั้งค่าชื่อระบบ", "เตือน", JOptionPane.WARNING_MESSAGE);
+                    } else if (ex.getMessage().equals("No database config.")) {
+                        JOptionPane.showMessageDialog(null, "ไม่พบข้อมูลการตั้งค่าการเชื่อมต่อฐานข้อมูล", "เตือน", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
             }
-        }
+        });
+        t.start();
 
     }
 
@@ -431,6 +492,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         DBUtil.getInstance().closeConnection();
+    }
+
+    public void setVersion(String version) {
+        this.setTitle(this.getTitle() + " Version " + version);
     }
 
 }

@@ -48,9 +48,13 @@ public class ExportController {
         createExportFolder(folderName);
         LOG.log(Level.INFO, "Created folder {0}", new Object[]{folderName});
 
-        datasources.forEach((ds) -> {
+        for (LinkedHashMap<String, String> ds : datasources) {
             String filename = ds.get("filename");
             String data = ds.get("xml");
+            if (data == null || data.isEmpty()) {
+                LOG.log(Level.INFO, "File {0} no data, skipped.", new Object[]{filename});
+                continue;
+            }
             try {
                 createXmlFile(folderName + File.separator + filename + ".xml", data);
                 LOG.log(Level.INFO, "Exported file {0}", new Object[]{filename + ".xml"});
@@ -58,7 +62,7 @@ public class ExportController {
                 Logger.getLogger(ExportController.class.getName()).log(Level.SEVERE, null, ex);
                 LOG.log(Level.INFO, "Can not export file {0}, skipped.", new Object[]{filename});
             }
-        });
+        }
 
         try {
             makeZipFile(folderName);
@@ -98,7 +102,7 @@ public class ExportController {
             Connection con = DBUtil.getInstance().getConnection();
             NamedParameterStatement p = new NamedParameterStatement(con, query);
             p.setArray("visitIds", con.createArrayOf("varchar", visitIds));
-//            System.err.println(p.getStatement().toString());
+            LOG.log(Level.SEVERE, p.getStatement().toString());
             try (ResultSet rs = p.executeQuery()) {
                 LinkedHashMap<String, String> map;
                 while (rs.next()) {

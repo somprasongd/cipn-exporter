@@ -6,12 +6,11 @@
 package cipn.exporter;
 
 import cipn.exporter.ui.MainFrame;
-import cipn.exporter.playground.Employee;
-import java.io.File;
-import java.io.StringWriter;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -46,66 +45,30 @@ public class CipnExporter {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        String version = getVersion();
         MainFrame mainFrame = new MainFrame();
+        mainFrame.setVersion(version);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
     }
 
-    private static void jaxbObjectToXML(Employee employee) {
-        try {
-            //Create JAXB Context
-            JAXBContext jaxbContext = JAXBContext.newInstance(Employee.class);
+    public static String getVersion() {
+        try (InputStream input = CipnExporter.class.getClassLoader().getResourceAsStream("cipn\\exporter\\app.properties")) {
 
-            //Create Marshaller
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+            Properties prop = new Properties();
 
-            //Required formatting??
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            if (input == null) {
+                System.out.println("Sorry, unable to find app.properties");
+                return "";
+            }
 
-//            jaxbMarshaller.setProperty("com.sun.xml.internal.bind.xmlHeaders",
-//                    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-//            jaxbMarshaller.setProperty("com.sun.xml.internal.bind.xmlDeclaration", Boolean.FALSE);
-////            jaxbMarshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-            // Change encode from utf-8 to windows-874
-            jaxbMarshaller.setProperty(Marshaller.JAXB_ENCODING, "windows-874");
-            jaxbMarshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "asd");
+            //load a properties file from class path, inside static method
+            prop.load(input);
+            return prop.getProperty("VERSION");
 
-//            jaxbMarshaller.setProperty("com.sun.xml.internal.bind.xmlDeclaration", Boolean.FALSE);
-            jaxbMarshaller.setProperty("com.sun.xml.internal.bind.xmlHeaders", "<?xml version=\"1.0\" encoding=\"windows-874\"?>\n");
-            //Print XML String to Console
-            StringWriter sw = new StringWriter();
-            sw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            //Write XML to StringWriter
-            jaxbMarshaller.marshal(employee, sw);
-
-            //Verify XML Content
-            String xmlContent = sw.toString();
-            System.out.println(xmlContent);
-
-        } catch (JAXBException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.getLogger(CipnExporter.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "";
     }
-
-    private static void jaxbObjectToXMLFile(Employee employee) {
-        try {
-            //Create JAXB Context
-            JAXBContext jaxbContext = JAXBContext.newInstance(Employee.class);
-
-            //Create Marshaller
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-            //Required formatting??
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-            //Store XML to File
-            File file = new File("employee.xml");
-
-            //Writes XML file to file-system
-            jaxbMarshaller.marshal(employee, file);
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

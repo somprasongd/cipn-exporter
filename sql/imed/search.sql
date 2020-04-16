@@ -1,10 +1,12 @@
 select q.hn
+       ,q.an
        ,q.pname
        ,max(q.invno) as invno
        ,sum(q.amount)::text as amount
        ,q.visit_begin_visit_time
        ,q.t_visit_id
 from (select patient.hn as hn
+    ,visit.an as an
     ,case when patient.prename is not null and patient.prename <> ''
             then patient.prename else '' end
         || patient.firstname || ' ' || patient.lastname as pname
@@ -35,6 +37,7 @@ from receipt
     inner join visit on receipt.visit_id = visit.visit_id
                     and visit.fix_visit_type_id = '1'
                     and visit.active = '1'
+                    and visit.an ilike $an
                     and substr(visit.visit_date, 1, 10) between $startDate and $endDate
     inner join visit_payment on visit.visit_id = visit_payment.visit_id
     inner join plan on visit_payment.plan_id = plan.plan_id
@@ -59,6 +62,7 @@ from receipt
                 and (cast(receipt.cost as float) > 0.0)
                 and visit.financial_discharge = '1'
                 and visit.doctor_discharge = '1'
+                and visit.an ilike $an
                 and substr(visit.visit_date, 1, 10) between $startDate and $endDate
              group by visit.visit_id
                 ) as receipt_invno on receipt_invno.visit_id = visit.visit_id
@@ -78,6 +82,7 @@ group by patient.hn
     ,receipt_billing_group.receipt_billing_group_id
 ) as q
 group by q.hn
+       ,q.an
        ,q.pname
        ,q.t_visit_id
        ,q.visit_begin_visit_time

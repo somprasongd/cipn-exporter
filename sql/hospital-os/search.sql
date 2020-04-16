@@ -1,4 +1,5 @@
 select t_patient.patient_hn as hn
+        ,t_visit.visit_vn as an
         ,case when f_patient_prefix.f_patient_prefix_id is not null
             then case when f_patient_prefix.f_patient_prefix_id = '000'
             then '' else f_patient_prefix.patient_prefix_description end else '' end
@@ -12,6 +13,7 @@ select t_patient.patient_hn as hn
                         and t_visit.f_visit_type_id = '1'
                         and t_visit.f_visit_status_id in ('2','3')
                         and t_visit.visit_ipd_discharge_status = '1'
+                        and t_visit.visit_vn ilike $an
                         and (substr(t_visit.visit_begin_visit_time, 1, 4)::int-543)::text || substr(t_visit.visit_begin_visit_time, 5, 6) between $startDate and $endDate)
         inner join t_patient on (t_patient.t_patient_id = t_visit.t_patient_id
                         and t_patient.patient_hn like $hn
