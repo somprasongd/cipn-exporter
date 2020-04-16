@@ -41,10 +41,10 @@ public class SearchController {
             String query = getQuery();
             Connection con = DBUtil.getInstance().getConnection();
             NamedParameterStatement p = new NamedParameterStatement(con, query);
-            p.setString("hn", hn + "%");
-            p.setString("an", an + "%");
-            p.setString("firstname", firstname + "%");
-            p.setString("lastname", lastname + "%");
+            p.setString("hn", "%" + hn + "%");
+            p.setString("an", "%" + an + "%");
+            p.setString("firstname", "%" + firstname + "%");
+            p.setString("lastname", "%" + lastname + "%");
             p.setString("startDate", sdf.format(startDate));
             p.setString("endDate", sdf.format(endDate));
             LOG.log(Level.SEVERE, p.getStatement().toString());
