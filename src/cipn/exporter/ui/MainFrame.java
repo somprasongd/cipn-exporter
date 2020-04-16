@@ -428,13 +428,14 @@ public class MainFrame extends javax.swing.JFrame {
                 try {
                     List<TableComplexDataSource> ds = searchController.handleSearch(hn, an, firstname, lastname, startDate, endDate);
                     table.setComplexDatasource(ds);
-                    btnSearch.setEnabled(true);
                 } catch (Exception ex) {
                     if (ex.getMessage().equals("No HIS")) {
                         JOptionPane.showMessageDialog(null, "ไม่พบข้อมูลการตั้งค่าชื่อระบบ", "เตือน", JOptionPane.WARNING_MESSAGE);
                     } else if (ex.getMessage().equals("No database config.")) {
                         JOptionPane.showMessageDialog(null, "ไม่พบข้อมูลการตั้งค่าการเชื่อมต่อฐานข้อมูล", "เตือน", JOptionPane.WARNING_MESSAGE);
                     }
+                } finally {
+                    btnSearch.setEnabled(true);
                 }
             }
         });

@@ -53,7 +53,7 @@ public class CipnExporter {
     }
 
     public static String getVersion() {
-        try (InputStream input = CipnExporter.class.getClassLoader().getResourceAsStream("cipn\\exporter\\app.properties")) {
+        try (InputStream input = CipnExporter.class.getClassLoader().getResourceAsStream("cipn/exporter/app.properties")) {
 
             Properties prop = new Properties();
 

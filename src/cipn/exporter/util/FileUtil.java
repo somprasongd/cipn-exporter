@@ -29,7 +29,7 @@ public class FileUtil {
 
     public static String readFile(String fileName) throws IOException {
         String data = "";
-        data = new String(Files.readAllBytes(Paths.get(fileName)));
+        data = new String(Files.readAllBytes(Paths.get(fileName)), "utf8");
         return data;
     }
 
