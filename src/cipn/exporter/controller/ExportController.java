@@ -133,7 +133,7 @@ public class ExportController {
     }
 
     private void createXmlFile(String filename, String data) throws Exception {
-        String hash = getHash(data);
+        String hash = getHash(data + "\n");
 
         StringBuilder xml = new StringBuilder();
         xml.append("<?xml version=\"1.0\" encoding=\"windows-874\"?>").append("\n");
