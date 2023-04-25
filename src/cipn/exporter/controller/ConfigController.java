@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class ConfigController {
 
     private Pattern patternHcode = Pattern.compile("^\\d{5}$");
-    private Pattern patternSessionNo = Pattern.compile("^(?!0{1})\\d{5}$");
+    private Pattern patternSessionNo = Pattern.compile("^(?!0{1})\\d{4,5}$");
 
     public void handleConfig(Component parent) {
         Map<String, String> config = ConfigUtil.readConfig();
@@ -66,7 +66,7 @@ public class ConfigController {
     }
 
     private String getSessionNo(Component parent, String defaultValue) {
-        return (String) JOptionPane.showInputDialog(parent, "เลขงวดส่งถัดไป (เป็นเลข Running 5 หลัก)",
+        return (String) JOptionPane.showInputDialog(parent, "เลขงวดส่งถัดไป (เป็นเลข Running 4 หรือ 5 หลัก)",
                 "กำหนดเลขงวดส่ง", JOptionPane.OK_CANCEL_OPTION,
                 null, null, defaultValue == null || defaultValue.isEmpty()
                 ? "10000" : defaultValue);
