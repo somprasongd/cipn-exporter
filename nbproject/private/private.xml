@@ -3,6 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group/>
-        <group name="hos-ce-3"/>
+        <group name="hos-ce-3">
+            <file>file:/D:/workspaces/ost/projects/tools/cipn-exporter/src/cipn/exporter/controller/ExportController.java</file>
+            <file>file:/D:/workspaces/ost/projects/tools/cipn-exporter/src/cipn/exporter/controller/ConfigController.java</file>
+            <file>file:/D:/workspaces/ost/projects/tools/cipn-exporter/src/cipn/exporter/util/FileUtil.java</file>
+            <file>file:/D:/workspaces/ost/projects/tools/cipn-exporter/src/cipn/exporter/ui/MainFrame.java</file>
+            <file>file:/D:/workspaces/ost/projects/tools/cipn-exporter/src/cipn/exporter/util/NamedParameterStatement.java</file>
+            <file>file:/D:/workspaces/ost/projects/tools/cipn-exporter/src/cipn/exporter/util/ConfigUtil.java</file>
+            <file>file:/D:/workspaces/ost/projects/tools/cipn-exporter/src/cipn/exporter/app.properties</file>
+            <file>file:/D:/workspaces/ost/projects/tools/cipn-exporter/src/cipn/exporter/util/DBUtil.java</file>
+            <file>file:/D:/workspaces/ost/projects/tools/cipn-exporter/src/cipn/exporter/CipnExporter.java</file>
+        </group>
     </open-files>
 </project-private>

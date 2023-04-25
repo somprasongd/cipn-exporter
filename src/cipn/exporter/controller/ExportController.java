@@ -78,11 +78,20 @@ public class ExportController {
     }
 
     private String useSessionNo() {
+        String len = ConfigUtil.getSessionNoLength();
         String sessionNo = ConfigUtil.getSessionNo();
-        ConfigUtil.updateConfig(ConfigUtil.KEY_SESSION_NO,
-                sessionNo.equals("99999")
-                ? "10000"
-                : String.valueOf(Integer.parseInt(sessionNo) + 1));
+        if (len.equals("5")) {
+            ConfigUtil.updateConfig(ConfigUtil.KEY_SESSION_NO,
+                    sessionNo.equals("99999")
+                    ? "10000"
+                    : String.valueOf(Integer.parseInt(sessionNo) + 1));
+        } else {
+            ConfigUtil.updateConfig(ConfigUtil.KEY_SESSION_NO,
+                    sessionNo.equals("9999")
+                    ? "0001"
+                    : String.format("%04d", Integer.parseInt(sessionNo) + 1));
+        }
+
         return sessionNo;
     }
 

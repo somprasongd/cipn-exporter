@@ -24,6 +24,7 @@ public class ConfigUtil {
     public static final String KEY_HIS = "HIS";
     public static final String KEY_HCODE = "HCODE";
     public static final String KEY_DB = "DB_URL";
+    public static final String KEY_SESSION_NO_LEN = "SESSION_NO_LEN";
     public static final String KEY_SESSION_NO = "SESSION_NO";
 
     private static String encode(String text) throws UnsupportedEncodingException {
@@ -54,6 +55,10 @@ public class ConfigUtil {
         return get(KEY_DB);
     }
 
+    public static String getSessionNoLength() {
+        return get(KEY_SESSION_NO_LEN);
+    }
+
     public static String getSessionNo() {
         return get(KEY_SESSION_NO);
     }
@@ -79,8 +84,7 @@ public class ConfigUtil {
         try {
             String[] lines = text.split("\n");
             String encoded = "";
-            for (int i = 0; i < lines.length; i++) {
-                String line = lines[i];
+            for (String line : lines) {
                 encoded += "\n" + encode(line);
             }
             FileUtil.writeFile(CONFIG_FILE, encoded.substring(1));
@@ -97,18 +101,21 @@ public class ConfigUtil {
         String his = config.get(ConfigUtil.KEY_HIS);
         String hcode = config.get(ConfigUtil.KEY_HCODE);
         String databaseUrl = config.get(ConfigUtil.KEY_DB);
+        String sessionNoLen = config.get(ConfigUtil.KEY_SESSION_NO_LEN);
         String sessionNo = config.get(ConfigUtil.KEY_SESSION_NO);
 
-        saveConfig(his, hcode, databaseUrl, sessionNo);
+        saveConfig(his, hcode, databaseUrl, sessionNoLen, sessionNo);
     }
 
-    public static void saveConfig(String his, String hcode, String databaseUrl, String sessionNo) {
+    public static void saveConfig(String his, String hcode, String databaseUrl, String sessionNoLen, String sessionNo) {
         StringBuilder str = new StringBuilder();
         str.append(ConfigUtil.KEY_HIS).append("=").append(his == null ? "" : his);
         str.append("\n");
         str.append(ConfigUtil.KEY_HCODE).append("=").append(hcode == null ? "" : hcode);
         str.append("\n");
         str.append(ConfigUtil.KEY_DB).append("=").append(databaseUrl == null ? "" : databaseUrl);
+        str.append("\n");
+        str.append(ConfigUtil.KEY_SESSION_NO_LEN).append("=").append(sessionNoLen == null ? "5" : sessionNoLen);
         str.append("\n");
         str.append(ConfigUtil.KEY_SESSION_NO).append("=").append(sessionNo == null ? "" : sessionNo);
         ConfigUtil.writeConfig(str.toString());
@@ -119,6 +126,7 @@ public class ConfigUtil {
         return config.containsKey(ConfigUtil.KEY_HIS)
                 && config.containsKey(ConfigUtil.KEY_HCODE)
                 && config.containsKey(ConfigUtil.KEY_DB)
+                && config.containsKey(ConfigUtil.KEY_SESSION_NO_LEN)
                 && config.containsKey(ConfigUtil.KEY_SESSION_NO);
     }
 }
